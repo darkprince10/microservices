@@ -1,5 +1,5 @@
-FROM node:14
-COPY . /var/www
+FROM node:20
+COPY .. /var/www
 WORKDIR /var/www
 #RUN npm install
 

@@ -24,7 +24,7 @@ spec:
       - name: "offer"
         image:  darkprince6/python:v1
         ports:
-        - containerPort:  1003
+        - containerPort:  5000
           name: "wishlist"
       imagePullSecrets:
       - name: javapipe
@@ -41,4 +41,4 @@ spec:
   ports:
   - name: "wishlist"
     port: 1003
-    targetPort: 1003
+    targetPort: 5000

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: "react-ui"
-        image:  santhoshkumarsk/ui:v1
+        image:  darkprince6/ui:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

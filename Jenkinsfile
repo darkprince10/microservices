@@ -57,13 +57,13 @@ pipeline {
                                     -D sonar.projectVersion=1.0-SNAPSHOT \
                                     -D sonar.sources=. \
                                     -D sonar.login=admin \
-                                    -D sonar.password=admin123 \
+                                    -D sonar.password=Admin123 \
                                     -D sonar.projectKey=project \
                                     -D sonar.projectName=wishlist-py \
                                     -D sonar.inclusions=index.py \
                                     -D sonar.sourceEncoding=UTF-8 \
                                     -D sonar.language=python \
-                                    -D sonar.host.url=http://13.232.29.132:9000/"""
+                                    -D sonar.host.url=http://54.236.5.214:9000/"""
                                 }
                             }
                         }
@@ -75,61 +75,61 @@ pipeline {
             steps {
                 parallel (
                     'docker login': {
-                        withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
-                            sh "docker login -u comdevops -p ${dockerPassword}"
+                        withCredentials([string(credentialsId: 'dockerpass', variable: 'dockerPassword')]) {
+                            sh "docker login -u darkprince6 -p ${dockerPassword}"
                         }
                     },
                     'ui-web-app-reactjs': {
                         dir('ui-web-app-reactjs'){
                             sh """
-                            docker build -t comdevops/ui:v1 .
-                            docker push comdevops/ui:v1
-                            docker rmi comdevops/ui:v1
+                            docker build -t darkprince6/ui:v1 .
+                            docker push darkprince6/ui:v1
+                            docker rmi darkprince6/ui:v1
                             """
                         }
                     },
                     'zuul-api-gateway' : {
                         dir('zuul-api-gateway'){
                             sh """
-                            docker build -t comdevops/api:v1 .
-                            docker push comdevops/api:v1
-                            docker rmi comdevops/api:v1
+                            docker build -t darkprince6/api:v1 .
+                            docker push darkprince6/api:v1
+                            docker rmi darkprince6/api:v1
                             """
                         }
                     },
                     'offers-microservice-spring-boot': {
                         dir('offers-microservice-spring-boot'){
                             sh """
-                            docker build -t comdevops/spring:v1 .
-                            docker push comdevops/spring:v1
-                            docker rmi comdevops/spring:v1
+                            docker build -t darkprince6/spring:v1 .
+                            docker push darkprince6/spring:v1
+                            docker rmi darkprince6/spring:v1
                             """
                         }
                     },
                     'shoes-microservice-spring-boot': {
                         dir('shoes-microservice-spring-boot'){
                             sh """
-                            docker build -t comdevops/spring:v2 .
-                            docker push comdevops/spring:v2
-                            docker rmi comdevops/spring:v2
+                            docker build -t darkprince6/spring:v2 .
+                            docker push darkprince6/spring:v2
+                            docker rmi darkprince6/spring:v2
                             """
                         }
                     },
                     'cart-microservice-nodejs': {
                         dir('cart-microservice-nodejs'){
                             sh """
-                            docker build -t comdevops/ui:v2 .
-                            docker push comdevops/ui:v2
-                            docker rmi comdevops/ui:v2
+                            docker build -t darkprince6/ui:v2 .
+                            docker push darkprince6/ui:v2
+                            docker rmi darkprince6/ui:v2
                             """
                         }
                     },
                     'wishlist-microservice-python': {
                         dir('wishlist-microservice-python'){
                             sh """
-                            docker build -t comdevops/python:v1 .
-                            docker push comdevops/python:v1
-                            docker rmi comdevops/python:v1
+                            docker build -t darkprince6/python:v1 .
+                            docker push darkprince6/python:v1
+                            docker rmi darkprince6/python:v1
                             """
                         }
                     }
@@ -141,9 +141,9 @@ pipeline {
                 parallel (
                     'deploy on k8s': {
                         script {
-                            withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
+                            withKubeCredentials(kubectlCredentials: [[ credentialsId: 'k8', namespace: 'ms' ]]) {
                                 sh 'kubectl get ns' 
-                                sh 'kubectl apply -f kubernetes/yamlfile'
+                                sh 'kubectl apply -f k8/yamlfile'
                             }
                         }
                     }

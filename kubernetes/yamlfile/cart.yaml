@@ -23,7 +23,6 @@ spec:
       containers:
       - name: "cart"
         image:  darkprince6/ui:v2
-        imagePullPolicy: Always
         ports:
         - containerPort:  1004
           name: "cart"
